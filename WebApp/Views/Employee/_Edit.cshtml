@@ -1,0 +1,96 @@
+﻿@model DAL.Employee
+@inject DAL.Service.Interface.ICompanyService compService
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="body p-lg-2">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formemployee" }))
+                {
+                    <div class="row clearfix">
+
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend></legend>
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m=>m.EmployeeId)
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "form-label" })
+                                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "form-label" })
+                                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "form-label" })
+                                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label class="form-label">Pembayaran Dari</label>
+                                                        @{
+                                                            var companies = await compService.GetCompanyList();
+
+                                                            //var companies = ViewBag.Company as List<SelectListItem>;
+                                                            <select name="CompanyId" class="form-control">
+                                                                @foreach (var item in companies)
+                                                                {
+                                                                    bool flag = item.CompanyId == Model.CompanyId;
+                                                                    @*<option value="@item.Value" selected="@item.Selected">@item.Text</option>*@
+                                                                    <option value="@item.CompanyId" selected="@flag">@item.Name</option>
+                                                                }
+                                                            </select>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
